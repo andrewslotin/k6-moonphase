@@ -2,6 +2,7 @@ package moonphase
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -102,6 +103,10 @@ func (m *Client) cachedForecast(lat, lng float64) (MoonPhase, bool) {
 }
 
 func (m *Client) queryAPI(method, u string, data io.Reader) (*http.Response, error) {
+	if m.APIKey == "" {
+		return nil, errors.New("missing Stormglass API key")
+	}
+
 	req, err := http.NewRequest(method, u, data)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
