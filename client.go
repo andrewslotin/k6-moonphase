@@ -59,7 +59,7 @@ func (m *Client) Current(lat, lng float64) MoonPhase {
 
 	resp, err := m.queryAPI(http.MethodGet, m.BaseURL+"/v2/astronomy/point?"+q.Encode(), nil)
 	if err != nil {
-		log.Fatal("failed to query Stormglass API: %w", err)
+		log.Fatalf("failed to query Stormglass API: %s", err)
 	}
 	defer resp.Body.Close()
 
@@ -67,7 +67,7 @@ func (m *Client) Current(lat, lng float64) MoonPhase {
 		Forecasts []AstronomyForecast `json:"data"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-		log.Fatal("failed to decode response data: %w", err)
+		log.Fatalf("failed to decode response data: %s", err)
 	}
 
 	if len(data.Forecasts) == 0 {
