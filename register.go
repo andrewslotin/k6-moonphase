@@ -6,7 +6,7 @@ import (
 	"go.k6.io/k6/js/modules"
 )
 
-const stormglassURL = "https://api.stormglass.io/v2"
+const stormglassURL = "https://api.stormglass.io"
 
 func init() {
 	modules.Register("k6/x/moonphase", New(stormglassURL, os.Getenv("STORMGLASS_API_KEY")))
